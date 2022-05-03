@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -25,9 +25,13 @@ export default function CampsDropDown(props: camps) {
   const selectedCamps: any = useSelector(
     (state: RootState) => state.chartReducer.selectedCamps
   );
-
+  useEffect(() => {
+    if (selectedCamps) {
+      setCamps(selectedCamps);
+    }
+  }, []);
   const handleChange = (event: SelectChangeEvent<typeof camps>) => {
-    if (event.target.value !== selectedCamps) {
+    if (event.target.value !== selectedCamps&& selectedCamps) {
       dispatch(setSelectedSchools([]));
       dispatch(setEmptyDataSets({}));
     }

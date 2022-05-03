@@ -32,7 +32,6 @@ export default function DetailsCard() {
     const selectedCamps: any = useSelector((state: RootState) => state.chartReducer.selectedCamps);
     const selectedSchools: any = useSelector((state: RootState) => state.chartReducer.selectedSchools);
     const detailsCardPoint: any = useSelector((state: RootState) => state.chartReducer.detailsCardPoint);
-console.log("555",detailsCardPoint)
   return (
     <div className='card'>
     <Card sx={{ minWidth: 275 }} >

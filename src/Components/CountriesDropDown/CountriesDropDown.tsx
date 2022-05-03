@@ -26,7 +26,6 @@ export default function CountriesDropDown(props: countries) {
   );
 
   useEffect(() => {
-    console.log(selectedCountry);
     if (selectedCountry) {
       setCountry(selectedCountry);
     }
@@ -34,7 +33,7 @@ export default function CountriesDropDown(props: countries) {
   const dispatch = useDispatch();
 
   const handleChange = (event: SelectChangeEvent<typeof country>) => {
-    if (event.target.value !== selectedCountry) {
+    if (event.target.value !== selectedCountry &&selectedCountry) {
       dispatch(setSelectedSchools([]));
       dispatch(setEmptyDataSets({}));
     }

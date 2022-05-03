@@ -34,14 +34,24 @@ interface schools {
 }
 
 export default function SchoolsMultiDropDown(props: schools) {
+
   const theme = useTheme();
-  const [school, setSchool] = useState<string[]>([]);
+  const [schools, setSchools] = useState<string[]>([]);
   const dispatch = useDispatch();
 
-  const handleChange = (event: SelectChangeEvent<typeof school>) => {
+
+  const selectedSchools: any = useSelector(
+    (state: RootState) => state.chartReducer.selectedSchools
+  );
+  useEffect(() => {
+    if (selectedSchools) {
+      setSchools(selectedSchools);
+    }
+  }, []);
+  const handleChange = (event: SelectChangeEvent<typeof schools>) => {
     if (event.target.value == "all") {
       let value = props.dropDownItems;
-      setSchool(value);
+      setSchools(value);
       dispatch(setSelectedSchools(props.dropDownItems));
       dispatch(setChartDataSets());
     } else {
@@ -50,7 +60,7 @@ export default function SchoolsMultiDropDown(props: schools) {
       } = event;
       dispatch(setSelectedSchools(value));
       dispatch(setChartDataSets());
-      setSchool(typeof value === "string" ? value.split(",") : value);
+      setSchools(typeof value === "string" ? value.split(",") : value);
     }
   };
   const selectedCountry: any = useSelector(
@@ -60,7 +70,7 @@ export default function SchoolsMultiDropDown(props: schools) {
     (state: RootState) => state.chartReducer.selectedCamps
   );
   useEffect(() => {
-    setSchool([]);
+    setSchools([]);
   }, [selectedCountry, selectedCamps]);
   return (
     <div>
@@ -72,7 +82,7 @@ export default function SchoolsMultiDropDown(props: schools) {
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
-          value={school}
+          value={schools}
           onChange={handleChange}
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
@@ -83,7 +93,7 @@ export default function SchoolsMultiDropDown(props: schools) {
             <MenuItem
               key={item}
               value={item}
-              style={getStyles(item, school, theme)}
+              style={getStyles(item, schools, theme)}
             >
               {item}
             </MenuItem>

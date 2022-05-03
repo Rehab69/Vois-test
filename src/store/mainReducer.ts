@@ -8,7 +8,7 @@ import {
   SET_SELECTEDSCHOOLS,
   SET_CHARTDATASETS,
   SET_DETAILSCARDPOINT,
-  SET_EMPTYDATASETS
+  SET_EMPTYDATASETS,
 } from "../types/Action";
 
 interface state {
@@ -20,9 +20,8 @@ interface state {
   schools: Array<any>;
   selectedSchools: Array<any>;
   newDataSets: any;
-  detailsCardPoint:any;
-    totalLessons:string | number;
-    
+  detailsCardPoint: any;
+  totalLessons: string | number;
 }
 
 const initState: state = {
@@ -34,15 +33,13 @@ const initState: state = {
   schools: [],
   selectedSchools: [],
   newDataSets: {},
-  detailsCardPoint:{},
-  totalLessons:0
+  detailsCardPoint: {},
+  totalLessons: 0,
 };
 
 export default function mainReducer(state = initState, action: any) {
   switch (action.type) {
     case SET_BASICDATA:
-      console.log("set basic data");
-
       return {
         ...state,
         basicData: [...action.payload],
@@ -53,13 +50,11 @@ export default function mainReducer(state = initState, action: any) {
         countries: [...action.payload],
       };
     case SET_SELECTEDCOUNTRY:
-      console.log("set country");
       return {
         ...state,
         selectedCountry: action.payload,
       };
     case SET_CAMPS:
-      console.log("set camps");
       let filterdCamps = state.basicData.filter((obj) => {
         return obj.country === state.selectedCountry;
       });
@@ -74,7 +69,6 @@ export default function mainReducer(state = initState, action: any) {
         selectedCamps: action.payload,
       };
     case SET_SCHOOLS:
-      console.log("set schools");
       let filterdSchools = state.basicData.filter((obj) => {
         return (
           obj.country === state.selectedCountry &&
@@ -86,53 +80,49 @@ export default function mainReducer(state = initState, action: any) {
       );
       return {
         ...state,
-        schools
+        schools,
       };
     case SET_SELECTEDSCHOOLS:
-
       return {
         ...state,
         selectedSchools: [...action.payload],
       };
     case SET_CHARTDATASETS:
-      let temp: any = {};
-      let lessonsNum=0
+    //   let temp: any = {};
+    //   let lessonsNum = 0;
 
-      state.selectedSchools.map((school) => {
-        let filterdData = state.basicData.filter((obj) => {
-          return (
-            obj.country === state.selectedCountry &&
-            obj.camp === state.selectedCamps &&
-            obj.school === school
-          );
-        });
-     filterdData.map(obj=>{lessonsNum+=obj.lessons 
-        return lessonsNum})
-        console.log("num",lessonsNum)
-        let newDataMonth: any = {};
-        filterdData.map((month) => {
-          newDataMonth[month.id] = month;
-        });
-        temp[school] = newDataMonth;
-      });
+      const filteredData = state.basicData.filter(
+        (i) =>
+          i.country === state.selectedCountry &&
+          i.camp === state.selectedCamps &&
+          state.selectedSchools.includes(i.school)
+      );
 
-      return {
-        ...state,
-        newDataSets: temp,
-        totalLessons:lessonsNum
-      };
-      case SET_DETAILSCARDPOINT:
-
-      return {
-        ...state,
-        detailsCardPoint:{...action.payload},
-      };
-      case SET_EMPTYDATASETS:
-  
+      const dataSet = filteredData.reduce((a, c) => {
         return {
-          ...state,
-          newDataSets:action.payload,
+          ...a,
+          [c.school]: {
+            ...a[c.school],
+            label: c.school,
+            data: [...(a[c.school]?.data ?? []), { x: c.month, y: c.lessons }],
+          },
         };
+      }, {});
+
+      return {
+        ...state,
+        newDataSets: dataSet,
+      };
+    case SET_DETAILSCARDPOINT:
+      return {
+        ...state,
+        detailsCardPoint: { ...action.payload },
+      };
+    case SET_EMPTYDATASETS:
+      return {
+        ...state,
+        newDataSets: action.payload,
+      };
     default:
       return {
         ...state,
