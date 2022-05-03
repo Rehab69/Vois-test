@@ -1,5 +1,3 @@
-import { AnyAction } from "@reduxjs/toolkit";
-
 export const SET_COUNTRIES:string = "SET_COUNTRIES";
 export const SET_SELECTEDCOUNTRY:string = "SET_SELECTEDCOUNTRY";
 export const SET_BASICDATA:string = "SET_BASICDATA";
@@ -9,6 +7,7 @@ export const SET_SCHOOLS:string = "SET_SCHOOLS";
 export const SET_SELECTEDSCHOOLS:string = "SET_SELECTEDSCHOOLS";
 export const SET_CHARTDATASETS:string = "SET_CHARTDATASETS";
 export const SET_DETAILSCARDPOINT:string = "SET_DETAILSCARDPOINT";
+export const SET_EMPTYDATASETS:string = "SET_EMPTYDATASETS";
 
 
 
@@ -46,7 +45,11 @@ interface ActionSetChartDataSets {
 }
 interface ActionSetDetailsCardPoint {
     type: string,
-    payload: Object,
+    payload: any,
+}
+interface ActionSetEmptyDataSets {
+    type: string,
+    payload: any,
 }
 export const setBasicData =(payload:any): ActionSetBasicData => {
     return{
@@ -94,9 +97,17 @@ export const setChartDataSets =(): ActionSetChartDataSets => {
         type: SET_CHARTDATASETS,
     }
 }
-export const setDetailsCardPoint =(payload:Object): ActionSetDetailsCardPoint => {
+export const setDetailsCardPoint =(payload:any): ActionSetDetailsCardPoint => {
+    console.log("9999999",payload)
     return{
-        type: SET_SELECTEDSCHOOLS,
+        type: SET_DETAILSCARDPOINT,
+        payload:payload
+    }
+}
+export const setEmptyDataSets =(payload:any): ActionSetEmptyDataSets => {
+    console.log("9999999",payload)
+    return{
+        type: SET_EMPTYDATASETS,
         payload:payload
     }
 }

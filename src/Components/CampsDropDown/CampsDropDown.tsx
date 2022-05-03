@@ -1,12 +1,16 @@
-//import * as React from 'react';
+import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useState, useEffect } from "react";
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
-import { useDispatch } from "react-redux";
-import { setSchools, setSelectedCamps } from "../../types/Action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setEmptyDataSets,
+  setSchools,
+  setSelectedCamps,
+  setSelectedSchools,
+} from "../../types/Action";
+import { RootState } from "../../store/store";
 
 interface camps {
   placeholder: string;
@@ -18,11 +22,19 @@ export default function CampsDropDown(props: camps) {
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const selectedCamps: any = useSelector(
+    (state: RootState) => state.chartReducer.selectedCamps
+  );
 
   const handleChange = (event: SelectChangeEvent<typeof camps>) => {
+    if (event.target.value !== selectedCamps) {
+      dispatch(setSelectedSchools([]));
+      dispatch(setEmptyDataSets({}));
+    }
     setCamps(event.target.value);
     dispatch(setSelectedCamps(event.target.value));
-    dispatch(setSchools())
+    dispatch(setSchools());
+    window.localStorage.setItem("camp", event.target.value);
   };
 
   return (

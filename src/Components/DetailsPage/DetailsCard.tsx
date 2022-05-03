@@ -8,7 +8,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import { RootState } from "../../store/store";
+import './DetailsCard.css'
 const bull = (
   <Box
     component="span"
@@ -26,29 +27,43 @@ export default function DetailsCard() {
     const home = () => {
         navigate("/");
     }
-
-
+    const totalLessons: any = useSelector((state: RootState) => state.chartReducer.totalLessons);
+    const selectedCountry: any = useSelector((state: RootState) => state.chartReducer.selectedCountry);
+    const selectedCamps: any = useSelector((state: RootState) => state.chartReducer.selectedCamps);
+    const selectedSchools: any = useSelector((state: RootState) => state.chartReducer.selectedSchools);
+    const detailsCardPoint: any = useSelector((state: RootState) => state.chartReducer.detailsCardPoint);
+console.log("555",detailsCardPoint)
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <div className='card'>
+    <Card sx={{ minWidth: 275 }} >
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography variant="h5" component="div">
           Details 
         </Typography>
-        <Typography variant="h5" component="div">
-          
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Country: {selectedCountry}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
+          Camp: {selectedCamps}
         </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          
+         Month: {detailsCardPoint.x}  
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+Number of lessons {detailsCardPoint.y}          
+<br />
+        </Typography>
+        {/* <Typography variant="body2">
+{selectedCountry}          
+<br />
           {'"a benevolent smile"'}
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions>
         <Button size="small" onClick={home}>Home</Button>
       </CardActions>
     </Card>
+    </div>
   );
 }

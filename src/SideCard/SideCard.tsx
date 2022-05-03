@@ -13,6 +13,10 @@ interface data{
 }
 export default function SideCard(props:data) {
     const totalLessons: any = useSelector((state: RootState) => state.chartReducer.totalLessons);
+    const selectedCountry: any = useSelector((state: RootState) => state.chartReducer.selectedCountry);
+    const selectedCamps: any = useSelector((state: RootState) => state.chartReducer.selectedCamps);
+    const selectedSchools: any = useSelector((state: RootState) => state.chartReducer.selectedSchools);
+    const detailsCardPoint: any = useSelector((state: RootState) => state.chartReducer.detailsCardPoint);
 
   return (
     <FormControl>
@@ -25,9 +29,15 @@ export default function SideCard(props:data) {
       >
        <label>{totalLessons}</label>
         <FormControlLabel
-          value="start"
+          value={selectedCountry}
           control={<Radio />}
-          label="Start"
+          label={selectedCountry}
+          labelPlacement="start"
+        />
+         <FormControlLabel
+          value={selectedCountry}
+          control={<Radio />}
+          label={selectedCountry}
           labelPlacement="start"
         />
         

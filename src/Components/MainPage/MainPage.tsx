@@ -31,7 +31,7 @@ function MainPage() {
   );
 
   let labels = Array.from(new Set(basicData.map((obj: any) => obj.month)));
-
+console.log("llllllllllllllll",newDataSets)
   useEffect(() => {
     (async () => {
       const response: [Array<string>, Array<string>, Array<string>] | string =

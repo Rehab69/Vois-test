@@ -3,7 +3,7 @@ import { globalAgent } from "http";
 import {getElementAtEvent} from 'react-chartjs-2'
 
 export function createLessonsArray(rawData: any) {
-    console.log(rawData)
+    console.log("jj",rawData)
   const lessons: any = {};
   for (let [i, v] of Object.entries(rawData)) {
     if (!lessons.hasOwnProperty(i)) lessons[i] = {};
@@ -63,12 +63,7 @@ export function createLessonsArray(rawData: any) {
     type: "line",
     data,
     options: {
-      scales: {
-        y:{
-            min:0,
-            max:500
-        }
-      },
+    
 }}
   return config;
 }

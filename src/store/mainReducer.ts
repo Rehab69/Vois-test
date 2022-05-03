@@ -7,7 +7,8 @@ import {
   SET_SCHOOLS,
   SET_SELECTEDSCHOOLS,
   SET_CHARTDATASETS,
-  SET_DETAILSCARDPOINT
+  SET_DETAILSCARDPOINT,
+  SET_EMPTYDATASETS
 } from "../types/Action";
 
 interface state {
@@ -18,10 +19,10 @@ interface state {
   selectedCamps: string;
   schools: Array<any>;
   selectedSchools: Array<any>;
-  //chartDataSets: Array<any>;
   newDataSets: any;
   detailsCardPoint:any;
-    totalLessons:string | number
+    totalLessons:string | number;
+    
 }
 
 const initState: state = {
@@ -32,7 +33,6 @@ const initState: state = {
   selectedCamps: "",
   schools: [],
   selectedSchools: [],
-  //chartDataSets: [],
   newDataSets: {},
   detailsCardPoint:{},
   totalLessons:0
@@ -81,15 +81,14 @@ export default function mainReducer(state = initState, action: any) {
           obj.camp === state.selectedCamps
         );
       });
-      var schools = Array.from(
+      const schools = Array.from(
         new Set(filterdSchools.map((obj: any) => obj.school))
       );
       return {
         ...state,
-        schools: schools,
+        schools
       };
     case SET_SELECTEDSCHOOLS:
-      console.log("set schools", action.payload);
 
       return {
         ...state,
@@ -107,7 +106,6 @@ export default function mainReducer(state = initState, action: any) {
             obj.school === school
           );
         });
-        console.log("ppppppp",filterdData)
      filterdData.map(obj=>{lessonsNum+=obj.lessons 
         return lessonsNum})
         console.log("num",lessonsNum)
@@ -124,12 +122,17 @@ export default function mainReducer(state = initState, action: any) {
         totalLessons:lessonsNum
       };
       case SET_DETAILSCARDPOINT:
-      console.log("set Details point", action.payload);
 
       return {
         ...state,
-        detailsCardPoint: {...action.payload},
+        detailsCardPoint:{...action.payload},
       };
+      case SET_EMPTYDATASETS:
+  
+        return {
+          ...state,
+          newDataSets:action.payload,
+        };
     default:
       return {
         ...state,
