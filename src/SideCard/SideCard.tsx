@@ -1,31 +1,37 @@
-import { useState } from "react"; 
-import Radio from '@mui/material/Radio'
+import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
 
 
-
-interface dataSets {
-  data: any;
+interface data{
+    data:any
 }
-export default function SideCard(props: dataSets) {
-    const [data,setData]=useState()
-    const [selectedValue, setSelectedValue] = useState('a');
+export default function SideCard(props:data) {
+    const totalLessons: any = useSelector((state: RootState) => state.chartReducer.totalLessons);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(event.target.value);
-      };
-    
-      const controlProps = (item: string) => ({
-        checked: selectedValue === item,
-        onChange: handleChange,
-        value: item,
-        name: 'color-radio-button-demo',
-        inputProps: { 'aria-label': item },
-      });
- 
-  return <div>
-    <p> First School</p> <Radio {...controlProps('b')} color="secondary" />
-    <p> First School </p><Radio {...controlProps('b')} color="success" />
-    <p> First School</p> <Radio {...controlProps('b')} color="secondary" />
-
-  </div>;
+  return (
+    <FormControl>
+      <FormLabel id="demo-form-control-label-placement">Label placement</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-form-control-label-placement"
+        name="position"
+        defaultValue="top"
+      >
+       <label>{totalLessons}</label>
+        <FormControlLabel
+          value="start"
+          control={<Radio />}
+          label="Start"
+          labelPlacement="start"
+        />
+        
+      </RadioGroup>
+    </FormControl>
+  );
 }

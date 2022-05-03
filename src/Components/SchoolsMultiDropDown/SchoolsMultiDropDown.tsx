@@ -41,7 +41,7 @@ export default function SchoolsMultiDropDown(props: schools) {
     const {
       target: { value },
     } = event;
-    console.log("valuee", value);
+    //console.log("valuee", value);
     dispatch(setSelectedSchools(value));
     dispatch(setChartDataSets());
     setPersonName(

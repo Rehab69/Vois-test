@@ -8,6 +8,7 @@ export const SET_SELECTEDCAMPS:string = "SET_SELECTEDCAMPS";
 export const SET_SCHOOLS:string = "SET_SCHOOLS";
 export const SET_SELECTEDSCHOOLS:string = "SET_SELECTEDSCHOOLS";
 export const SET_CHARTDATASETS:string = "SET_CHARTDATASETS";
+export const SET_DETAILSCARDPOINT:string = "SET_DETAILSCARDPOINT";
 
 
 
@@ -42,6 +43,10 @@ interface ActionSetSelectedSchools {
 interface ActionSetChartDataSets {
     type: string,
     
+}
+interface ActionSetDetailsCardPoint {
+    type: string,
+    payload: Object,
 }
 export const setBasicData =(payload:any): ActionSetBasicData => {
     return{
@@ -87,6 +92,12 @@ export const setSelectedSchools =(payload:any): ActionSetSelectedSchools => {
 export const setChartDataSets =(): ActionSetChartDataSets => {
     return{
         type: SET_CHARTDATASETS,
+    }
+}
+export const setDetailsCardPoint =(payload:Object): ActionSetDetailsCardPoint => {
+    return{
+        type: SET_SELECTEDSCHOOLS,
+        payload:payload
     }
 }
 //export type Action = ActionSetCountries |ActionSetSelectedCountry |ActionSetBasicData ;

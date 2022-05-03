@@ -1,10 +1,10 @@
 import { ActiveElement, ChartEvent } from "chart.js";
 import { globalAgent } from "http";
+import {getElementAtEvent} from 'react-chartjs-2'
 
 export function createLessonsArray(rawData: any) {
-    console.log("rawdata",rawData)
+    console.log(rawData)
   const lessons: any = {};
-
   for (let [i, v] of Object.entries(rawData)) {
     if (!lessons.hasOwnProperty(i)) lessons[i] = {};
     for (let [x, y] of Object.entries(rawData[i])) {
@@ -51,11 +51,9 @@ export function createLessonsArray(rawData: any) {
       };
     }),
   };
-  console.log("data",data.datasets)
  data.datasets.forEach((set)=>{
       set.data.sort(function(a:any,b:any){
-          console.log("a,b",a,b)
-          console.log("a.values",a.x)
+         
          return labels.indexOf(a.x)-labels.indexOf(b.x)
     })
   }
@@ -74,3 +72,10 @@ export function createLessonsArray(rawData: any) {
 }}
   return config;
 }
+
+// export function createDetailsData(event:any,chartRef:any){
+//     console.log("arguments",event,chartRef)
+//     //@ts-ignore
+//     console.log(getElementAtEvent(chartRef.current, event)[0].element.$context.raw)
+
+// }

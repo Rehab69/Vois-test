@@ -7,6 +7,7 @@ import {
   SET_SCHOOLS,
   SET_SELECTEDSCHOOLS,
   SET_CHARTDATASETS,
+  SET_DETAILSCARDPOINT
 } from "../types/Action";
 
 interface state {
@@ -19,6 +20,8 @@ interface state {
   selectedSchools: Array<any>;
   //chartDataSets: Array<any>;
   newDataSets: any;
+  detailsCardPoint:any;
+    totalLessons:string | number
 }
 
 const initState: state = {
@@ -31,6 +34,8 @@ const initState: state = {
   selectedSchools: [],
   //chartDataSets: [],
   newDataSets: {},
+  detailsCardPoint:{},
+  totalLessons:0
 };
 
 export default function mainReducer(state = initState, action: any) {
@@ -91,8 +96,9 @@ export default function mainReducer(state = initState, action: any) {
         selectedSchools: [...action.payload],
       };
     case SET_CHARTDATASETS:
-      console.log("set data sets");
       let temp: any = {};
+      let lessonsNum=0
+
       state.selectedSchools.map((school) => {
         let filterdData = state.basicData.filter((obj) => {
           return (
@@ -101,6 +107,10 @@ export default function mainReducer(state = initState, action: any) {
             obj.school === school
           );
         });
+        console.log("ppppppp",filterdData)
+     filterdData.map(obj=>{lessonsNum+=obj.lessons 
+        return lessonsNum})
+        console.log("num",lessonsNum)
         let newDataMonth: any = {};
         filterdData.map((month) => {
           newDataMonth[month.id] = month;
@@ -111,6 +121,14 @@ export default function mainReducer(state = initState, action: any) {
       return {
         ...state,
         newDataSets: temp,
+        totalLessons:lessonsNum
+      };
+      case SET_DETAILSCARDPOINT:
+      console.log("set Details point", action.payload);
+
+      return {
+        ...state,
+        detailsCardPoint: {...action.payload},
       };
     default:
       return {
